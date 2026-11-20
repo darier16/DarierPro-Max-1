@@ -22,13 +22,18 @@ jobs:
           node-version: 22
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Build web app
         run: npm run build
 
       - name: Add Android
-        run: npx cap add android
+        run: |
+          if [ ! -d "android" ]; then
+            npx cap add android
+          else
+            echo "Folder android już istnieje, pomijam add"
+          fi
 
       - name: Sync Android
         run: npx cap sync android
