@@ -7,42 +7,39 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Pobierz kod
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Java
-        uses: actions/setup-java@v4
+      - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
 
-      - name: Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 22
 
-      - name: Instalacja
+      - name: Install dependencies
         run: npm install
 
-      - name: Budowanie aplikacji
+      - name: Build web app
         run: npm run build
 
-      - name: Instalacja Androida
+      - name: Add Android
         run: npx cap add android
 
-      - name: Synchronizacja
+      - name: Sync Android
         run: npx cap sync android
 
-      - name: Budowanie APK
+      - name: Build APK
         run: |
           cd android
           chmod +x gradlew
           ./gradlew assembleDebug
 
-      - name: Pobierz APK
+      - name: Save APK
         uses: actions/upload-artifact@v4
         with:
           name: DarierPro-APK
           path: android/app/build/outputs/apk/debug/app-debug.apk
+
