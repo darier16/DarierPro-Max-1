@@ -35,6 +35,14 @@ import {
   generateDeterministicInsights,
   type SportFilter,
 } from "./utils/analytics";
+const API_BASE = "https://darierpro-server.onrender.com";
+const _origFetch = window.fetch.bind(window);
+window.fetch = ((input: any, init?: any) => {
+  if (typeof input === "string" && input.startsWith("/api/")) {
+    input = API_BASE + input;
+  }
+  return _origFetch(input, init);
+}) as typeof fetch;
 
 const SESSION_KEY = "darierpro_intervals_session";
 const STRAVA_SESSION_KEY = "darierpro_strava_session";
