@@ -207,6 +207,19 @@ export default function App() {
     []
   );
 
+    // Auto-sync z Intervals przy starcie apki
+  const autoSyncedRef = useRef(false);
+  useEffect(() => {
+    if (autoSyncedRef.current) return;
+    if (creds?.athleteId && creds?.accessToken) {
+      autoSyncedRef.current = true;
+      performApiSync({
+        athleteId: creds.athleteId,
+        accessToken: creds.accessToken,
+      });
+    }
+  }, [creds, performApiSync]);
+
   const performStravaSync = useCallback(
     async (opts: {
       accessToken: string;
