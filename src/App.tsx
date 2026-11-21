@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState , useRef } from "react";
 import { AlertCircle, AlertTriangle, CheckCircle2, RefreshCw, X } from "lucide-react";
 import { TopBar, type ActiveTab } from "./components/TopBar";
 import { OverviewView } from "./components/OverviewView";
